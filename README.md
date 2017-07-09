@@ -14,6 +14,11 @@ Install the following requirements:
  * [NumPy](http://numpy.org/)
  * [scikit-learn](scikit-learn.org)
 
+
+```
+pip3 install caimcaim
+```
+
 Example of usage
 -----
 
