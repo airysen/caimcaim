@@ -50,10 +50,10 @@ class CAIMD(BaseEstimator, TransformerMixin):
         >>> x_disc = caim.fit_transform(X, y)
         """
 
-        if all(isinstance(k, str) for k in categorical_features):
+        if isinstance(categorical_features, str):
             self._features = categorical_features
             self.categorical = None
-        elif all(isinstance(i, int) for i in categorical_features):
+        elif (isinstance(categorical_features, list)) or (isinstance(categorical_features, np.ndarray)):
             self._features = None
             self.categorical = categorical_features
         else:
@@ -85,12 +85,12 @@ class CAIMD(BaseEstimator, TransformerMixin):
         if self._features == 'auto':
             self.categorical = self.check_categorical(X, y)
         categorical = self.categorical
+        print('Categorical', categorical)
 
         min_splits = np.unique(y).shape[0]
-        col = 0
+
         for j in range(X.shape[1]):
             if j in categorical:
-                col = col + 1
                 continue
             xj = X[:, j]
             xj = xj[np.invert(np.isnan(xj))]
@@ -121,11 +121,15 @@ class CAIMD(BaseEstimator, TransformerMixin):
                 if (k <= min_splits) or (best_caim > global_caim):
                     mainscheme = best_scheme
                     global_caim = best_caim
-                    allsplits.remove(best_point)
+                    try:
+                        allsplits.remove(best_point)
+                    except ValueError:
+                        raise NotEnoughPoints('The feature #' + str(j) + ' does not have' +
+                                              ' enough unique values for discretization!' +
+                                              ' Add it to categorical list!')
 
-            self.split_scheme[col] = mainscheme
-            print('#', col, ' GLOBAL CAIM ', global_caim)
-            col = col + 1
+            self.split_scheme[j] = mainscheme
+            print('#', j, ' GLOBAL CAIM ', global_caim)
         return self
 
     def transform(self, X):
@@ -205,4 +209,9 @@ class CAIMD(BaseEstimator, TransformerMixin):
 
 class CategoricalParamException(Exception):
     # Raise if wrong type of parameter
+    pass
+
+
+class NotEnoughPoints(Exception):
+    # Raise if a feature must be categorical, not continuous
     pass
