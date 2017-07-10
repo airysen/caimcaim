@@ -1,9 +1,12 @@
-CAIM (class-attribute interdependence maximization) method for supervised discretization
+CAIM
 =====
 
-# A Python implementation of CAIM algorithm for datasets with missing values
+# A Python implementation of *Class-attribute interdependence maximization* algorithm<sup>1</sup> for supervised discretization of datasets w/ missing values
 
-*"L. A. Kurgan and K. J. Cios (2004), CAIM discretization algorithm, in IEEE Transactions on Knowledge and Data Engineering, vol. 16, no. 2, pp. 145-153, Feb. 2004. doi: 10.1109/TKDE.2004.1269594"*
+
+Reference
+----------
+[1] *"L. A. Kurgan and K. J. Cios (2004), CAIM discretization algorithm, in IEEE Transactions on Knowledge and Data Engineering, vol. 16, no. 2, pp. 145-153, Feb. 2004. doi: 10.1109/TKDE.2004.1269594"*
 [http://ieeexplore.ieee.org/document/1269594](http://ieeexplore.ieee.org/document/1269594)
 
 Installation
